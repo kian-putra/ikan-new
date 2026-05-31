@@ -9,6 +9,16 @@ from werkzeug.utils import secure_filename
 
 from utils.fish_measure import measure_fish
 
+os.makedirs(
+    "static/uploads",
+    exist_ok=True
+)
+
+os.makedirs(
+    "static/results",
+    exist_ok=True
+)
+
 # =========================================================
 # APP CONFIG
 # =========================================================
