@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Hasil Pengukuran Ikan
+    </title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f6f9;
+            margin:0;
+            padding:0;
+        }
+
+        .container{
+            max-width:1200px;
+            margin:auto;
+            padding:30px;
+        }
+
+        .card{
+            background:white;
+            border-radius:15px;
+            padding:25px;
+            box-shadow:0 2px 12px rgba(0,0,0,0.1);
+            margin-bottom:25px;
+        }
+
+        h1{
+            text-align:center;
+            color:#2c3e50;
+        }
+
+        .result-image{
+            width:100%;
+            border-radius:10px;
+            margin-top:15px;
+        }
+
+        .summary-grid{
+            display:grid;
+            grid-template-columns:
+                repeat(auto-fit,minmax(200px,1fr));
+            gap:15px;
+            margin-top:20px;
+        }
+
+        .summary-box{
+            background:#3498db;
+            color:white;
+            padding:20px;
+            border-radius:10px;
+            text-align:center;
+        }
+
+        .summary-box h2{
+            margin:0;
+            font-size:28px;
+        }
+
+        .summary-box p{
+            margin-top:8px;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:20px;
+        }
+
+        table th{
+            background:#3498db;
+            color:white;
+            padding:12px;
+        }
+
+        table td{
+            padding:12px;
+            text-align:center;
+            border:1px solid #ddd;
+        }
+
+        tr:nth-child(even){
+            background:#f9f9f9;
+        }
+
+        .back-button{
+            display:inline-block;
+            margin-top:20px;
+            background:#2ecc71;
+            color:white;
+            padding:12px 20px;
+            border-radius:8px;
+            text-decoration:none;
+        }
+
+        .back-button:hover{
+            background:#27ae60;
+        }
+
+        .error-box{
+            background:#e74c3c;
+            color:white;
+            padding:20px;
+            border-radius:10px;
+            text-align:center;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+        Hasil Pengukuran Panjang Ikan
+    </h1>
+
+    {% if error %}
+
+    <div class="card">
+
+        <div class="error-box">
+
+            <h2>
+                Terjadi Kesalahan
+            </h2>
+
+            <p>
+                {{ error }}
+            </p>
+
+        </div>
+
+        <a
+            href="/"
+            class="back-button"
+        >
+            Kembali
+        </a>
+
+    </div>
+
+    {% else %}
+
+    <!-- ========================= -->
+    <!-- IMAGE RESULT -->
+    <!-- ========================= -->
+
+    <div class="card">
+
+        <h2>
+            Gambar Hasil Deteksi
+        </h2>
+
+        <img
+            src="{{ url_for('static', filename=image) }}"
+            class="result-image"
+            alt="Result Image"
+        >
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- SUMMARY -->
+    <!-- ========================= -->
+
+    <div class="card">
+
+        <h2>
+            Ringkasan Pengukuran
+        </h2>
+
+        <div class="summary-grid">
+
+            <div class="summary-box">
+
+                <h2>
+                    {{ summary.total_fish }}
+                </h2>
+
+                <p>
+                    Jumlah Ikan
+                </p>
+
+            </div>
+
+            <div class="summary-box">
+
+                <h2>
+                    {{ summary.average_length }}
+                </h2>
+
+                <p>
+                    Rata-rata (cm)
+                </p>
+
+            </div>
+
+            <div class="summary-box">
+
+                <h2>
+                    {{ summary.min_length }}
+                </h2>
+
+                <p>
+                    Minimum (cm)
+                </p>
+
+            </div>
+
+            <div class="summary-box">
+
+                <h2>
+                    {{ summary.max_length }}
+                </h2>
+
+                <p>
+                    Maksimum (cm)
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- TABLE -->
+    <!-- ========================= -->
+
+    <div class="card">
+
+        <h2>
+            Data Panjang Ikan
+        </h2>
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>
+                    No
+                </th>
+
+                <th>
+                    Spesies
+                </th>
+
+                <th>
+                    Panjang (cm)
+                </th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for fish in fish_data %}
+
+            <tr>
+
+                <td>
+                    {{ fish.fish_id }}
+                </td>
+
+                <td>
+                    {{ fish.species }}
+                </td>
+
+                <td>
+                    {{ fish.length_cm }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        <a
+            href="/"
+            class="back-button"
+        >
+            Upload Gambar Baru
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

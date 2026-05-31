@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Fish Length Measurement
+    </title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f6f9;
+            margin:0;
+            padding:0;
+        }
+
+        .container{
+            max-width:900px;
+            margin:auto;
+            padding:30px;
+        }
+
+        .card{
+            background:white;
+            border-radius:15px;
+            padding:30px;
+            box-shadow:0 2px 12px rgba(0,0,0,0.1);
+        }
+
+        h1{
+            text-align:center;
+            color:#2c3e50;
+            margin-bottom:10px;
+        }
+
+        .subtitle{
+            text-align:center;
+            color:#666;
+            margin-bottom:30px;
+        }
+
+        .upload-box{
+            border:2px dashed #3498db;
+            border-radius:10px;
+            padding:30px;
+            text-align:center;
+        }
+
+        input[type=file]{
+            margin-top:15px;
+            margin-bottom:20px;
+        }
+
+        button{
+            background:#3498db;
+            color:white;
+            border:none;
+            padding:15px 25px;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        button:hover{
+            background:#2980b9;
+        }
+
+        #preview{
+            max-width:100%;
+            margin-top:20px;
+            display:none;
+            border-radius:10px;
+        }
+
+        .loading{
+            display:none;
+            margin-top:20px;
+            color:#555;
+            font-weight:bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>
+            Fish Length Measurement
+        </h1>
+
+        <p class="subtitle">
+            Upload foto ikan dan skala untuk menghitung panjang ikan secara otomatis menggunakan YOLO Segmentation.
+        </p>
+
+        <form
+            action="/predict"
+            method="POST"
+            enctype="multipart/form-data"
+            onsubmit="showLoading()"
+        >
+
+            <div class="upload-box">
+
+                <h3>
+                    Pilih Foto
+                </h3>
+
+                <input
+                    type="file"
+                    name="image"
+                    id="imageInput"
+                    accept="image/*"
+                    capture="environment"
+                    required
+                >
+
+                <br>
+
+                <button type="submit">
+                    Hitung Panjang Ikan
+                </button>
+
+                <div
+                    class="loading"
+                    id="loadingText"
+                >
+                    Sedang memproses gambar...
+                </div>
+
+                <img
+                    id="preview"
+                    alt="Preview"
+                >
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+const imageInput =
+    document.getElementById(
+        "imageInput"
+    );
+
+const preview =
+    document.getElementById(
+        "preview"
+    );
+
+imageInput.addEventListener(
+    "change",
+    function(event){
+
+        const file =
+            event.target.files[0];
+
+        if(file){
+
+            preview.src =
+                URL.createObjectURL(file);
+
+            preview.style.display =
+                "block";
+        }
+    }
+);
+
+function showLoading(){
+
+    document.getElementById(
+        "loadingText"
+    ).style.display = "block";
+
+}
+
+</script>
+
+</body>
+</html>
